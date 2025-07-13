@@ -1,0 +1,27 @@
+dnf install httpd -y
+systemctl start httpd
+systemctl enable httpd
+mkdir -p /var/www/growyourroots.co.in/public_html
+chown -R apache:apache /var/www/growyourroots.co.in
+chmod -R 755 /var/www/growyourroots.co.in
+vim /etc/httpd/conf.d/growyourroots.co.in.conf
+<VirtualHost *:80>
+    ServerName growyourroots.co.in
+    DocumentRoot /var/www/growyourroots.co.in/public_html
+    ErrorLog /var/log/httpd/growyourroots.co.in_error.log
+    CustomLog /var/log/httpd/growyourroots.co.in_access.log combined
+</VirtualHost>
+apachectl configtest
+systemctl restart httpd
+
+
+Install the node 22 latest version in this server
+
+curl -fsSL https://rpm.nodesource.com/setup_22.x | sudo bash
+
+dnf install -y nodejs
+
+node -v
+
+npm -v
+

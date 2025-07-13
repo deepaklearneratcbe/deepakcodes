@@ -1,0 +1,18 @@
+#!/bin/bash
+
+dbname="jicatesolu_pms"
+backupdir="/home/jicatesolu/public_html/pmsoftware.jicate.solutions/databasebackup"
+
+backup_database() {
+    timestamp=$(date "+%d-%m-%Y-%r")
+    sqlbakfile="$backupdir/$dbname-$timestamp.sql"
+    mysqldump "$dbname" > "$sqlbakfile"
+    echo "Backup of database $dbname created: $sqlbakfile"
+}
+
+# Perform backup every 1 hour, 3 hours, and 6 hours
+backup_database
+
+# Clean up old backup files (keep only 3 latest backups)
+cd "$backupdir" || exit
+ls -t *.sql | tail -n +4 | xargs rm -f  
